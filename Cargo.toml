@@ -1,0 +1,14 @@
+[package]
+name = "clever-graphics"
+version = "0.1.0"
+authors = ["not_a_seagull <jtnunley01@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+core-graphics = "0.22"
+objc = "0.2"
+objc_exception = "0.1"
+orphan-crippler = "0.1.2"
+
+[features]
+parking_lot = ["orphan-crippler/parking_lot"]
