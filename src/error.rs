@@ -33,7 +33,7 @@ pub type Result<T = ()> = std::result::Result<T, Error>;
 #[macro_export]
 macro_rules! objc_try {
     ($e: expr) => {{
-        objc_exception::r#try(move || $e).map_err(|e| $crate::Error::from_exception(e))
+        unsafe { objc_exception::r#try(move || $e) }.map_err(|e| $crate::Error::from_exception(e))
     }};
 }
 
