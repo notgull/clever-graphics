@@ -1,8 +1,8 @@
 // MIT/Apache2 License
 
 #![cfg(target_vendor = "apple")]
-#![allow(clippy::too-many-arguments)]
-#![allow(clippy::useless-conversion)]
+#![allow(clippy::too_many_arguments)]
+#![allow(clippy::useless_conversion)]
 //! Equivalent to `core_graphics::CGContext` but with the ability to push its work onto a thread pool.
 
 #[macro_use]
