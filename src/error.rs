@@ -14,10 +14,11 @@ impl Error {
     #[inline]
     pub fn from_exception(exception: *mut Exception) -> Self {
         let nsexception = class!(NSException);
-        let is_nsexception: BOOL = unsafe { msg_send![exception, isKindOfClass: nsexception] };
+        let is_nsexception: BOOL =
+            unsafe { msg_send![exception as *const Object, isKindOfClass: nsexception] };
         Self {
             exception,
-            is_nsexception,
+            is_nsexception: if is_nsexception == 0 { false } else { true },
         }
     }
 }
@@ -83,14 +84,14 @@ impl fmt::Display for Error {
                 msg_send![desc, UTF8String]
             };
 
-            let desc: &CStr = unsafe { CStr::from_ptr(name) };
-            let desc: &str = name
+            let desc: &CStr = unsafe { CStr::from_ptr(desc) };
+            let desc: &str = desc
                 .to_str()
                 .expect("Objective-C string should be guaranteed UTF-8");
 
             write!(f, "Caught exception: {}", desc)
         } else {
-            f.write_str("An unknown exception was thrown")
+            f.write_str("An unknown exception was caught")
         }
     }
 }

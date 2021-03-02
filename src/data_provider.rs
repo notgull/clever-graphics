@@ -1,6 +1,6 @@
 // MIT/Apache2 License
 
-use crate::{spawner::Spawner, util::SyncContainer};
+use crate::util::SyncContainer;
 use core_graphics::data_provider::CGDataProvider;
 use std::{mem::ManuallyDrop, sync::Arc};
 

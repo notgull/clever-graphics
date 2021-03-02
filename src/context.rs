@@ -6,7 +6,6 @@ use core_graphics::{
     geometry::{CGPoint, CGRect, CGSize},
 };
 use orphan_crippler::Receiver;
-use std::ptr::NonNull;
 
 /// The context in which drawing takes place.
 #[derive(Debug, Clone)]
@@ -29,7 +28,7 @@ impl<S: Spawner> Context<S> {
     #[inline]
     pub unsafe fn from_raw(ptr: *mut (), spawner: S) -> Self {
         let cref = ptr as *mut CGContextRef;
-        let cg = CGContext::from_existing_context_ptr(cref);
+        let cg = CGContext::from_existing_context_ptr(cref.cast());
         Self {
             inner: SyncContainer::new(cg),
             spawner,
@@ -70,7 +69,7 @@ impl<S: Spawner> Context<S> {
     }
 
     #[inline]
-    pub fn add_line_to_point(&self, x: f64, y: f64) -> Recevier<crate::Result> {
+    pub fn add_line_to_point(&self, x: f64, y: f64) -> Receiver<crate::Result> {
         let cx = self.context();
         self.spawner
             .spawn_blocking(move || objc_try!(cx.add_line_to_point(x, y)))

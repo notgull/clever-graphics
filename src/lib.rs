@@ -12,5 +12,7 @@ pub mod error;
 pub mod image;
 pub mod spawner;
 
+pub(crate) mod util;
+
 pub use context::*;
 pub use error::*;
