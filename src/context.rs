@@ -6,16 +6,33 @@ use core_graphics::{
     geometry::{CGPoint, CGRect, CGSize},
 };
 use orphan_crippler::Receiver;
+use std::fmt;
 
 /// The context in which drawing takes place.
-#[derive(Debug, Clone)]
+#[derive(Clone)]
 pub struct Context<S> {
     inner: SyncContainer<CGContext>,
     spawner: S,
 }
 
-// safety: core graphics is thread safe
-unsafe impl<S: Sync> Sync for Context<S> {}
+impl<S: fmt::Debug> fmt::Debug for Context<S> {
+    #[inline]
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        struct Inner;
+
+        impl fmt::Debug for Inner {
+            #[inline]
+            fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+                f.write_str("CGContext")
+            }
+        }
+
+        f.debug_struct("Context")
+            .field("inner", &Inner)
+            .field("spawner", &self.spawner)
+            .finish()
+    }
+}
 
 impl<S> Context<S> {
     #[inline]

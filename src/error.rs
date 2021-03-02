@@ -10,6 +10,9 @@ pub struct Error {
     is_nsexception: bool,
 }
 
+unsafe impl Send for Error {}
+unsafe impl Sync for Error {}
+
 impl Error {
     #[inline]
     pub fn from_exception(exception: *mut Exception) -> Self {
