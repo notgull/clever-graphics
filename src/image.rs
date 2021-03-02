@@ -7,7 +7,7 @@ use std::mem::ManuallyDrop;
 /// An image.
 pub struct Image<T> {
     image: ManuallyDrop<SyncContainer<CGImage>>,
-    data_provider: DataProvider<T>,
+    _data_provider: DataProvider<T>,
 }
 
 impl<T> Image<T> {
@@ -45,7 +45,7 @@ impl<T: AsRef<[u8]> + Send + Sync> Image<T> {
         );
         Self {
             image: unsafe { ManuallyDrop::new(SyncContainer::new(image)) },
-            data_provider: provider,
+            _data_provider: provider,
         }
     }
 }

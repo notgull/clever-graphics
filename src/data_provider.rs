@@ -6,7 +6,7 @@ use std::{mem::ManuallyDrop, sync::Arc};
 
 pub struct DataProvider<T> {
     provider: ManuallyDrop<SyncContainer<CGDataProvider>>,
-    real_data: T,
+    _real_data: T,
 }
 
 impl<T> DataProvider<T> {
@@ -24,7 +24,7 @@ impl<T: AsRef<[u8]> + Send + Sync> DataProvider<Arc<T>> {
             provider: unsafe {
                 ManuallyDrop::new(SyncContainer::new(CGDataProvider::from_buffer(val.clone())))
             },
-            real_data: val,
+            _real_data: val,
         }
     }
 }
@@ -36,7 +36,7 @@ impl<T: AsRef<[u8]> + Send + Sync> DataProvider<T> {
         let provider = unsafe { CGDataProvider::from_slice(val.as_ref()) };
         Self {
             provider: unsafe { ManuallyDrop::new(SyncContainer::new(provider)) },
-            real_data: val,
+            _real_data: val,
         }
     }
 }

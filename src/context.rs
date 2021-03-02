@@ -42,6 +42,9 @@ impl<S> Context<S> {
 }
 
 impl<S: Spawner> Context<S> {
+    /// # Safety
+    ///
+    /// Use a valid pointer.
     #[inline]
     pub unsafe fn from_raw(ptr: *mut (), spawner: S) -> Self {
         let cref = ptr as *mut CGContextRef;

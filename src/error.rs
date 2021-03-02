@@ -21,7 +21,7 @@ impl Error {
             unsafe { msg_send![exception as *const Object, isKindOfClass: nsexception] };
         Self {
             exception,
-            is_nsexception: if is_nsexception == 0 { false } else { true },
+            is_nsexception: is_nsexception != 0,
         }
     }
 }
@@ -33,7 +33,7 @@ pub type Result<T = ()> = std::result::Result<T, Error>;
 #[macro_export]
 macro_rules! objc_try {
     ($e: expr) => {{
-        unsafe { objc_exception::r#try(move || $e) }.map_err(|e| $crate::Error::from_exception(e))
+        unsafe { objc_exception::r#try(move || $e) }.map_err($crate::Error::from_exception)
     }};
 }
 

@@ -14,11 +14,6 @@ impl<T> SyncContainer<T> {
     pub unsafe fn new(t: T) -> Self {
         Self(t)
     }
-
-    #[inline]
-    pub fn into_inner(self) -> T {
-        self.0
-    }
 }
 
 impl<T> ops::Deref for SyncContainer<T> {
