@@ -56,6 +56,14 @@ impl<S: Spawner> Context<S> {
     }
 
     #[inline]
+    pub fn new(cg: CGContext, spawner: S) -> Self {
+        Self {
+            inner: unsafe { SyncContainer::new(cg) },
+            spawner,
+        }
+    }
+
+    #[inline]
     pub fn set_rgb_fill_color(&self, r: f64, g: f64, b: f64, a: f64) -> Receiver<crate::Result> {
         let cx = self.context();
         self.spawner
