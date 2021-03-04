@@ -1,6 +1,6 @@
 [package]
 name = "clever-graphics"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["not_a_seagull <jtnunley01@gmail.com>"]
 edition = "2018"
 description = "Core graphics, designed to run on a thread pool"
